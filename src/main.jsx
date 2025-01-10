@@ -11,6 +11,7 @@ import {
 import Home from "./page/Home.jsx";
 import About from "./page/About.jsx";
 import Todo from "./page/Todo.jsx";
+import { TodoProvider } from "./context/TodoContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,10 +29,12 @@ const router = createBrowserRouter(
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider
-    router={router}
-    future={{
-      v7_startTransition: true,
-    }}
-  />
+  <TodoProvider>
+    <RouterProvider
+      router={router}
+      future={{
+        v7_startTransition: true,
+      }}
+    />
+  </TodoProvider>
 );

@@ -1,27 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TitleHeader from "../components/TitleHeader";
+import { TodoContext } from "../context/TodoContext";
 
 function Todo() {
-  const [todoList, setTodoList] = useState([
-    {
-      id: 1,
-      title: "Kerja",
-      body: "Kerja di Kantor",
-      isComplete: false,
-    },
-    {
-      id: 2,
-      title: "Ngoding",
-      body: "Ngoding Javascript",
-      isComplete: true,
-    },
-    {
-      id: 3,
-      title: "Main",
-      body: "Main bersama Istri",
-      isComplete: false,
-    },
-  ]);
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
+  const {addTodo, changeStatusTodo} = useContext(TodoContext)
+
+  const inputTitle = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const inputBody = (e) => {
+    setBody(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    addTodo(title, body)
+  }
+
+  const changeStatus = (id) => { 
+    changeStatusTodo(id)
+  }
+
+  useEffect(() => {
+    console.log('updated', todoList)
+  }, [todoList])
 
   return (
     <>
@@ -31,11 +36,13 @@ function Todo() {
           <h1 className="text-3xl text-center my-2 font-semibold">
             TAMBAH TODO
           </h1>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block mb-1 font-medium">Title</label>
               <input
                 type="text"
+                onChange={inputTitle}
+                value={title}
                 className="bg-gray-50 border block w-full p-2 border-gray-300 rounded-lg"
               />
             </div>
@@ -43,6 +50,8 @@ function Todo() {
               <label className="block mb-1 font-medium">Body</label>
               <input
                 type="text"
+                onChange={inputBody}
+                value={body}
                 className="bg-gray-50 border block w-full p-2 border-gray-300 rounded-lg"
               />
             </div>
@@ -58,7 +67,7 @@ function Todo() {
         <div className="border rounded-lg p-3">
           <h1 className="text-3xl text-center my-2 font-semibold">DATA TODO</h1>
           <table className="w-full mt-5">
-            <thead className="text-center uppercase bg-blue-600">
+            <thead className="text-center text-white uppercase bg-blue-600">
               <tr>
                 <th className="px-6 py-3 text-center">No</th>
                 <th className="px-6 py-3">Title</th>
@@ -69,7 +78,7 @@ function Todo() {
             </thead>
             <tbody className="bg-blue-300">
               {todoList.map((item) => (
-                <tr>
+                <tr key={item.id}>
                   <td className="px-6 py-3 text-center">{item.id}</td>
                   <td className="px-6 py-3">{item.title}</td>
                   <td className="px-6 py-3">{item.body}</td>
@@ -80,7 +89,7 @@ function Todo() {
                         Done
                       </span>
                     ) : (
-                      <button>☑️</button>
+                      <button onClick={() => changeStatus(item.id)}>☑️</button>
                     )}
                   </td>
                 </tr>
