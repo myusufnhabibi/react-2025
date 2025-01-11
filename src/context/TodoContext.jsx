@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
-  const [todoList, setTodoList] = useStatetate([
+  const [todoList, setTodoList] = useState([
     {
       id: 1,
       title: "Kerja",
@@ -35,9 +35,6 @@ export const TodoProvider = ({ children }) => {
         isComplete: false,
       },
     ]);
-
-    setTitle("");
-    setBody("");
   };
 
   const changeStatusTodo = (id) => {
@@ -50,10 +47,8 @@ export const TodoProvider = ({ children }) => {
   };
 
   return (
-    <TodoContext.Provider
-      value={{ todoList, addTodo, changeStatusTodo }}
-    >
-        {children}
+    <TodoContext.Provider value={{ todoList, addTodo, changeStatusTodo }}>
+      {children}
     </TodoContext.Provider>
   );
 };

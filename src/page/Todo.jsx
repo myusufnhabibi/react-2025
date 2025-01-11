@@ -3,30 +3,32 @@ import TitleHeader from "../components/TitleHeader";
 import { TodoContext } from "../context/TodoContext";
 
 function Todo() {
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-  const {addTodo, changeStatusTodo} = useContext(TodoContext)
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const { todoList, addTodo, changeStatusTodo } = useContext(TodoContext);
 
   const inputTitle = (e) => {
-    setTitle(e.target.value)
-  }
+    setTitle(e.target.value);
+  };
 
   const inputBody = (e) => {
-    setBody(e.target.value)
-  }
+    setBody(e.target.value);
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    addTodo(title, body)
-  }
+    e.preventDefault();
+    addTodo(title, body);
+    setTitle("");
+    setBody("");
+  };
 
-  const changeStatus = (id) => { 
-    changeStatusTodo(id)
-  }
+  const changeStatus = (id) => {
+    changeStatusTodo(id);
+  };
 
   useEffect(() => {
-    console.log('updated', todoList)
-  }, [todoList])
+    console.log("updated", todoList);
+  }, [todoList]);
 
   return (
     <>
